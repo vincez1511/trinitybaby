@@ -1,0 +1,222 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    background-image: url('pictures/purple-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow-x: hidden;
+}
+
+/* =========================
+   GLOBAL ANIMATIONS
+========================= */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes floaty {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+/* =========================
+   LANDING PAGE (RESPONSIVE)
+========================= */
+
+.landing {
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.top-text {
+    font-size: 10px;
+    letter-spacing: 4px;
+    animation: fadeUp 1s ease forwards;
+}
+
+.name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 10vw, 80px);
+    animation: fadeUp 1.2s ease forwards;
+}
+
+.subtitle {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(16px, 5vw, 22px);
+    animation: fadeUp 1.4s ease forwards;
+}
+
+/* Scroll indicator */
+.scroll {
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+    animation: fadeUp 2s ease-in-out;
+}
+
+.scroll p {
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.line {
+    width: 1px;
+    height: 35px;
+    background: white;
+    margin: auto;
+    animation: floaty 2.5s ease-in-out infinite;
+}
+
+/* =========================
+   LOVE LETTER (RESPONSIVE)
+========================= */
+
+.second-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.love-letter {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: fadeUp 1.2s ease-in-out, floaty 6s ease-in-out infinite;
+}
+
+/* =========================
+   FLIPBOOK SECTION (MOBILE FIX)
+========================= */
+
+.flipbook-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 10px;
+}
+
+.flipbook-container {
+    perspective: 2000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeUp 1.5s ease-in-out;
+}
+
+/* RESPONSIVE BOOK SIZE */
+.flipbook {
+    width: min(90vw, 380px);
+    height: calc(min(90vw, 380px) * 1.4);
+    position: relative;
+    transform-style: preserve-3d;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+/* =========================
+   PAGES
+========================= */
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: left;
+    transition: transform 0.9s cubic-bezier(0.4, 0.2, 0.2, 1);
+    backface-visibility: hidden;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    background: white;
+}
+
+/* image fit */
+.page-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* flip state */
+.page.flipped {
+    transform: rotateY(-180deg);
+}
+
+/* =========================
+   CONTROLS (MOBILE FRIENDLY)
+========================= */
+
+.controls {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.controls button {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-size: 14px;
+}
+
+.controls button:active {
+    transform: scale(0.95);
+}
+
+/* =========================
+   MOBILE TWEAKS
+========================= */
+
+@media (max-width: 480px) {
+
+    .scroll {
+        bottom: 10px;
+    }
+
+    .love-letter {
+        max-width: 95%;
+    }
+
+    .controls button {
+        width: 45%;
+    }
+}

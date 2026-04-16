@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinity</title>
+
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js" defer></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="bg"></div>
+<!-- LANDING -->
+<div class="landing">
+    <p class="top-text">A MESSAGE JUST FOR YOU</p>
+    <h1 class="name">Trinity</h1>
+    <p class="subtitle">This page was made with love - scroll down</p>
+
+    <div class="scroll">
+        <p>SCROLL</p>
+        <div class="line"></div>
+    </div>
+</div>
+
+<!-- LOVE LETTER -->
+<div class="second-page">
+    <img class="love-letter" src="pictures/Red and White Vintage Typewriter Love Letter.png" alt="">
+</div>
+
+<!-- FLIPBOOK -->
+<div class="flipbook-section">
+    <div class="flipbook-container">
+        <div class="flipbook" id="flipbook"></div>
+
+        <div class="controls">
+            <button onclick="prevPage()">← Previous</button>
+            <button onclick="nextPage()">Next →</button>
+            <button onclick="resetBook()">Reset</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
