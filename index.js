@@ -4,14 +4,14 @@ class Flipbook {
         this.currentPage = 0;
         this.isAnimating = false;
 
-       this.images = [
-        "pictures/meandtrinity.png",
-        "pictures/loveletter.png",
-        "pictures/meandtrinity2.png",
-        "pictures/loveletter2.png",
-        "pictures/meandtrinity3.png",
-        "pictures/loveletter3.png",
-    ];
+        this.images = [
+            "pictures/meandtrinity.png",
+            "pictures/loveletter.png",
+            "pictures/meandtrinity2.png",
+            "pictures/loveletter2.png",
+            "pictures/meandtrinity3.png",
+            "pictures/loveletter3.png",
+        ];
 
         this.pageCount = this.images.length;
 
@@ -27,14 +27,22 @@ class Flipbook {
     createPages() {
         this.container.innerHTML = "";
 
-        this.images.forEach((src) => {
+        this.images.forEach((src, i) => {
             const page = document.createElement("div");
             page.className = "page";
+            page.style.zIndex = this.pageCount - i;
 
             page.innerHTML = `<img src="${src}" class="page-img">`;
 
             this.container.appendChild(page);
         });
+    }
+
+    lockAnimation(duration = 900) {
+        this.isAnimating = true;
+        setTimeout(() => {
+            this.isAnimating = false;
+        }, duration);
     }
 
     updateDisplay() {
@@ -56,20 +64,28 @@ class Flipbook {
     }
 
     nextPage() {
-        if (this.currentPage < this.pageCount - 1) {
-            this.currentPage++;
-            this.updateDisplay();
-        }
+        if (this.isAnimating) return;
+        if (this.currentPage >= this.pageCount) return;
+
+        this.lockAnimation();
+
+        this.currentPage++;
+        this.updateDisplay();
     }
 
     prevPage() {
-        if (this.currentPage > 0) {
-            this.currentPage--;
-            this.updateDisplay();
-        }
+        if (this.isAnimating) return;
+        if (this.currentPage <= 0) return;
+
+        this.lockAnimation();
+
+        this.currentPage--;
+        this.updateDisplay();
     }
 
     reset() {
+        if (this.isAnimating) return;
+
         this.currentPage = 0;
         this.updateDisplay();
     }
@@ -77,15 +93,29 @@ class Flipbook {
     addEvents() {
         let startX = 0;
 
-        this.container.addEventListener("touchstart", e => {
+        // TOUCH (mobile fix)
+        this.container.addEventListener("touchstart", (e) => {
             startX = e.touches[0].clientX;
-        });
+        }, { passive: true });
 
-        this.container.addEventListener("touchend", e => {
+        this.container.addEventListener("touchend", (e) => {
+            if (this.isAnimating) return;
+
             let diff = startX - e.changedTouches[0].clientX;
 
             if (diff > 50) this.nextPage();
-            if (diff < -50) this.prevPage();
+            else if (diff < -50) this.prevPage();
+        }, { passive: true });
+
+        // OPTIONAL: click support (desktop fallback)
+        this.container.addEventListener("click", (e) => {
+            if (this.isAnimating) return;
+
+            const rect = this.container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+
+            if (x > rect.width / 2) this.nextPage();
+            else this.prevPage();
         });
     }
 }
